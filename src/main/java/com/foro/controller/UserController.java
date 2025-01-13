@@ -2,6 +2,7 @@ package com.foro.controller;
 
 import com.foro.domain.user.SingupUserDto;
 import com.foro.domain.user.User;
+import com.foro.domain.user.UserDataDto;
 import com.foro.domain.user.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,11 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<User> registerUser(@RequestBody @Valid SingupUserDto singupUserDto){
+    public ResponseEntity<UserDataDto> registerUser(@RequestBody @Valid SingupUserDto singupUserDto){
 
         var user=userService.createUser(singupUserDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new UserDataDto(user));
 
 
     }

@@ -28,6 +28,13 @@ public class UserService {
 
       return   userRepository.save(user);
     }
+
+    public User getUser(Long id){
+        if(!userRepository.existsById(id)){
+            throw  new RuntimeException("user doesn't exist with "+id+" id");
+        }
+        return  userRepository.findById(id).get();
+    }
 }
 
 
