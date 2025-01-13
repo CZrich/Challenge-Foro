@@ -1,7 +1,7 @@
 package com.foro.domain.course;
 
 import jakarta.persistence.*;
-import jdk.jfr.Enabled;
+
 import lombok.*;
 
 @Entity
