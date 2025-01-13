@@ -4,12 +4,14 @@ import jakarta.persistence.*;
 
 import lombok.*;
 
-@Entity
-@Table(name = "course")
+
+@Table(name = "courses")
+@Entity(name = "Course")
+
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @EqualsAndHashCode(of = "id")
 public class Course {
     @Id
@@ -19,5 +21,13 @@ public class Course {
 
     @Enumerated(EnumType.STRING)
     private Category category;
+
+    @PrePersist
+    @PreUpdate
+    private void convertCategoryToUpperCase() {
+        if (this.category != null) {
+            this.category = Category.valueOf(this.category.name().toUpperCase());
+        }
+    }
 
 }

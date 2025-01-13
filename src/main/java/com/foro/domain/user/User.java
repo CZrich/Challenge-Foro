@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Entity
+@Entity(name="User")
 @Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,13 +25,7 @@ public class User {
     public  Boolean isLogin(String password, PasswordEncoder passwordEncoder){
         return  passwordEncoder.matches(password,this.password);
     }
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
 
 }
