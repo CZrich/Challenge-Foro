@@ -26,9 +26,7 @@ public class TopicController {
     @PostMapping
     public ResponseEntity create(@RequestBody @Valid RegisterTopicDto topicDto){
 
-        if(topicService.tipicIsExist(topicDto.title(),topicDto.message())){
-            return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(" topic already exist");
-        }
+
         var topic=topicService.createTopic(topicDto);
         var topicDetail= new DetailTopic(topic);
         return ResponseEntity.status(HttpStatus.CREATED).body(topicDetail);
@@ -50,25 +48,15 @@ public class TopicController {
 
     @PutMapping("/{id}")
     @Transactional
-    public  ResponseEntity updateTopic(@PathVariable Long id,@RequestBody RegisterTopicDto registerTopicDto){
-        if(!topicValidation.validateCourse(registerTopicDto.idCourse())){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("doesn't exist course with  this id "+registerTopicDto.idCourse());
-        }
-        if(!topicValidation.validateCourse(registerTopicDto.idAuthor())){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("doesn't exist author with  this id "+registerTopicDto.idAuthor());
-        }
-        if(!topicValidation.validateTopic(id)){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("topic doesn't exist with this id "+id);
-        }
+    public  ResponseEntity updateTopic(@PathVariable Long id,@RequestBody @Valid RegisterTopicDto registerTopicDto){
+
         return topicService.updateTopic(id,registerTopicDto);
 
     }
 
     @DeleteMapping("/{id}")
     public  ResponseEntity deleteTopic(@PathVariable Long id){
-        if(!topicValidation.validateTopic(id)){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("topic doesn't exist with this id "+id);
-        }
+
         return topicService.deleteTopic(id);
     }
 

@@ -38,7 +38,7 @@ public class TokenService {
             throw  new ResponseStatusException(HttpStatus.BAD_REQUEST,"incorrect  email/passsword");
         }
         var now= Instant.now();
-        var expireIn=300L;
+        var expireIn=3600L;
         var claims= JwtClaimsSet.builder()
                 .issuer("foro-api")
                 .issuedAt(now)
