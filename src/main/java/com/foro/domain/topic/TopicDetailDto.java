@@ -5,7 +5,7 @@ import com.foro.domain.user.UserDataDto;
 
 import java.time.LocalDateTime;
 
-public record DetailTopic(
+public record TopicDetailDto(
         Long id,
         String title,
         String message,
@@ -14,7 +14,7 @@ public record DetailTopic(
         Course course
 
 ) {
-    public DetailTopic(Topic topic) {
+    public TopicDetailDto(Topic topic) {
         this(topic.getId(),topic.getTitle(),topic.getMessage(),topic.getDateCreation(),new UserDataDto(topic.getAuthor()),topic.getCourse());
     }
 }

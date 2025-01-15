@@ -28,22 +28,22 @@ public class TopicController {
 
 
         var topic=topicService.createTopic(topicDto);
-        var topicDetail= new DetailTopic(topic);
+        var topicDetail= new TopicDetailDto(topic);
         return ResponseEntity.status(HttpStatus.CREATED).body(topicDetail);
     }
 
     @GetMapping
-    public Page<DetailTopic> getTopics(@PageableDefault(size = 10,sort = {"dateCreation"})Pageable pageable){
+    public Page<TopicDetailDto> getTopics(@PageableDefault(size = 10,sort = {"dateCreation"})Pageable pageable){
         return  topicService.listTopics(pageable);
     }
     @GetMapping("/data")
-    public Page<DetailTopic> getTopicsByYearAndCourse(@PageableDefault(size = 10,sort = {"dateCreation"})Pageable pageable,@RequestBody @Valid  SearchTopicDto searchTopicDto){
+    public Page<TopicDetailDto> getTopicsByYearAndCourse(@PageableDefault(size = 10,sort = {"dateCreation"})Pageable pageable, @RequestBody @Valid  SearchTopicDto searchTopicDto){
         return topicService.listTopicsByCourseAndYear(pageable,searchTopicDto);
     }
     @GetMapping("/{id}")
-    public  DetailTopic showTopicDetail(@PathVariable  Long id){
+    public TopicDetailDto showTopicDetail(@PathVariable  Long id){
 
-        return  new DetailTopic( topicService.getTopic(id));
+        return  new TopicDetailDto( topicService.getTopic(id));
     }
 
     @PutMapping("/{id}")

@@ -56,14 +56,14 @@ public class TopicService {
          return  topicRepository.save(topic);
     }
 
-    public Page<DetailTopic> listTopics( Pageable pageable){
-        return  topicRepository.findAll(pageable).map(DetailTopic::new);
+    public Page<TopicDetailDto> listTopics(Pageable pageable){
+        return  topicRepository.findAll(pageable).map(TopicDetailDto::new);
     }
 
-    public  Page<DetailTopic>listTopicsByCourseAndYear(Pageable pageable,SearchTopicDto searchTopicDto){
+    public  Page<TopicDetailDto>listTopicsByCourseAndYear(Pageable pageable, SearchTopicDto searchTopicDto){
 
         return topicRepository.listTopicsForCourseAndYear(pageable,searchTopicDto.year(),searchTopicDto.nameCourse())
-                .map(DetailTopic::new);
+                .map(TopicDetailDto::new);
     }
 
     public  Topic getTopic(Long id){
