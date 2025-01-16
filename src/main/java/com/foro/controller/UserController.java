@@ -1,34 +1,32 @@
 package com.foro.controller;
 
-import com.foro.domain.user.SingupUserDto;
-import com.foro.domain.user.User;
 import com.foro.domain.user.UserDataDto;
 import com.foro.domain.user.UserService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/singup")
+@RequestMapping("/user")
 public class UserController {
+
 
     @Autowired
     private UserService userService;
 
-    @PostMapping
-    public ResponseEntity<UserDataDto> registerUser(@RequestBody @Valid SingupUserDto singupUserDto){
+    @GetMapping
+    public Page<UserDataDto> getUsers(@PageableDefault(size = 10,sort={"email"})Pageable pageable){
 
-        var user=userService.createUser(singupUserDto);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(new UserDataDto(user));
-
-
+        return userService.getAllUser(pageable).map(UserDataDto::new);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteUser(@PathVariable Long id){
+        return  userService.deleteUser(id);
+    }
+
+
 }

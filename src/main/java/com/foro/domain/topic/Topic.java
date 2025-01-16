@@ -32,7 +32,7 @@ public class Topic {
     @ManyToOne
     private Course course;
 
-    @OneToMany(mappedBy = "topic")
+    @OneToMany(mappedBy = "topic",fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
     private List<Answer> answers;
 
    public LocalDateTime getTime(){

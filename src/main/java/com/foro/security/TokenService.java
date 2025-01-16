@@ -1,5 +1,6 @@
 package com.foro.security;
 
+import com.foro.domain.exceptios.RequestException;
 import com.foro.domain.user.LoginUserDto;
 import com.foro.domain.user.UserRepository;
 import jakarta.validation.Valid;
@@ -31,11 +32,11 @@ public class TokenService {
     public String login( LoginUserDto loginUserDto){
         var userOpt= userRepository.findByEmail(loginUserDto.email());
         if(userOpt.isEmpty()){
-            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST,"email not found");
+            throw  new RequestException("email not found",HttpStatus.BAD_REQUEST);
         }
         var loged=userOpt.get().isLogin(loginUserDto.password(),bCryptPasswordEncoder);
         if(!loged){
-            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST,"incorrect  email/passsword");
+            throw  new RequestException("incorrect  email/passsword",HttpStatus.BAD_REQUEST);
         }
         var now= Instant.now();
         var expireIn=3600L;
@@ -49,4 +50,23 @@ public class TokenService {
         return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
 
+
+    public String generatePasswordResetToken(String email) {
+        var userOpt = userRepository.findByEmail(email);
+        if (userOpt.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email not found");
+        }
+
+        var now = Instant.now();
+        var expireIn = 3600L; // Token válido por 1 hora
+        var claims = JwtClaimsSet.builder()
+                .issuer("foro-api")
+                .issuedAt(now)
+                .expiresAt(now.plusSeconds(expireIn))
+                .subject(email) // Email del usuario
+                .claim("purpose", "password-reset") // Propósito del token
+                .build();
+
+        return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+    }
 }

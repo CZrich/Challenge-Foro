@@ -39,8 +39,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sm->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(
-                        auth->auth.requestMatchers(HttpMethod.POST,"/singup").permitAll()
+                        auth->auth.requestMatchers(HttpMethod.POST,"/auth/signup").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/login").permitAll()
+                                .requestMatchers(HttpMethod.POST,"/auth/password-reset").permitAll()
+                                .requestMatchers(HttpMethod.POST,"/auth/password-reset/request").permitAll()
                                 .anyRequest()
                                 .authenticated()
 
