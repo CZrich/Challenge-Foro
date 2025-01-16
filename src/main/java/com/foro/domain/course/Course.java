@@ -1,8 +1,12 @@
 package com.foro.domain.course;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.foro.domain.topic.Topic;
 import jakarta.persistence.*;
 
 import lombok.*;
+
+import java.util.List;
 
 
 @Table(name = "courses")
@@ -21,6 +25,10 @@ public class Course {
 
     @Enumerated(EnumType.STRING)
     private Category category;
+
+    @OneToMany(mappedBy = "course",fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
+    @JsonIgnore
+    private List<Topic> topicList;
 
     @PrePersist
     @PreUpdate

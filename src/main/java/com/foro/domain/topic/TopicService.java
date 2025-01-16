@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -56,7 +57,7 @@ public class TopicService {
          return  topicRepository.save(topic);
     }
 
-    public Page<TopicDetailDto> listTopics(Pageable pageable){
+    public Page<TopicDetailDto> listTopics( Pageable pageable){
         return  topicRepository.findAll(pageable).map(TopicDetailDto::new);
     }
 

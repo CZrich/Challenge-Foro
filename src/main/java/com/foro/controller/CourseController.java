@@ -3,6 +3,7 @@ package com.foro.controller;
 import com.foro.domain.course.CourseDetailDto;
 import com.foro.domain.course.CourseRegisterDto;
 import com.foro.domain.course.CourseService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/course")
+
 public class CourseController {
 
     @Autowired
@@ -44,5 +46,11 @@ public class CourseController {
     @Transactional
     public  ResponseEntity<Void> updateCourse(@PathVariable Long id, @RequestBody @Valid CourseRegisterDto courseDto){
         return  courseService.updateCourse(id,courseDto);
+    }
+
+    @DeleteMapping("/{id}")
+
+    public  ResponseEntity<Void> deleteCourse(@PathVariable Long id){
+        return  courseService.deleteCourse(id);
     }
 }

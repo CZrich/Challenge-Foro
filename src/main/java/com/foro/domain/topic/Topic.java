@@ -1,5 +1,6 @@
 package com.foro.domain.topic;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.foro.domain.answer.Answer;
 import com.foro.domain.course.Course;
 import com.foro.domain.user.User;
@@ -30,9 +31,11 @@ public class Topic {
     private User author;
 
     @ManyToOne
+    @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
     @OneToMany(mappedBy = "topic",fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private List<Answer> answers;
 
    public LocalDateTime getTime(){

@@ -2,6 +2,7 @@ package com.foro.controller;
 
 import com.foro.domain.user.UserDataDto;
 import com.foro.domain.user.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
+
 public class UserController {
 
 

@@ -3,6 +3,7 @@ package com.foro.controller;
 import com.foro.domain.answer.AnswerDetailDto;
 import com.foro.domain.answer.AnswerRegisterDto;
 import com.foro.domain.answer.AnswerSerive;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/answer")
+
 public class AnswerCrontroller {
 
 

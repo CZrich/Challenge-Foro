@@ -15,12 +15,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/topic")
+
 public class TopicController {
 
     @Autowired
     private TopicService topicService;
-    @Autowired
-    private TopicValidation topicValidation;
 
 
     @PostMapping
@@ -33,7 +32,7 @@ public class TopicController {
     }
 
     @GetMapping
-    public Page<TopicDetailDto> getTopics(@PageableDefault(size = 10,sort = {"dateCreation"})Pageable pageable){
+    public Page<TopicDetailDto> getTopics( @PageableDefault(page = 0,size = 10,sort = {"dateCreation"})Pageable pageable){
         return  topicService.listTopics(pageable);
     }
     @GetMapping("/data")
